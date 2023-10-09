@@ -13,7 +13,7 @@ export default new Vuex.Store({
     chainId: false,
     nowWidth: 0,
     rpcUrl: '',
-    backendUrl: 'https://defi-v2.api-absolute-uv.com',
+    backendUrl: 'https://defi-absolute.api-absolute-uv.com',
     backendVersion: '/api/v1',
     usdtAddress: '',
     tbtAddress: '',
