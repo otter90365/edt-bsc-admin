@@ -1,4 +1,4 @@
-# egt-new2-admin
+# edt-bsc-admin
 
 ## Project setup
 ```
