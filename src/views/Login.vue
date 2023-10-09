@@ -3,7 +3,7 @@
     <div class="logo-block d-flex flex-md-row flex-column align-center">
       <img class="mr-5" src="@/assets/img/logo.png" alt="logo" width="100px">
       <div>
-        <div class="rem-8">Absolute DEFI</div>
+        <div class="rem-8">EGT Defi</div>
         <div class="rem-md-20 rem-10">智能合約借貸應用</div>
       </div>
     </div>

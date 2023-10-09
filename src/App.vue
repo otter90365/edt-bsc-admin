@@ -18,7 +18,7 @@
             <img src="@/assets/img/logo.png" alt="logo" width="35px">
           </v-list-item-icon>
           <v-list-item-title>
-            <div class="rem-0">Absolute DEFI</div>
+            <div class="rem-0">EGT Defi</div>
             <div class="rem-4">智能合約借貸應用</div>
           </v-list-item-title>
         </v-list-item>
