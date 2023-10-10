@@ -49,8 +49,8 @@ export default new Vuex.Store({
       state.rpcUrl = rpcUrl
     },
     updateContractAddress(state, contract){
-      state.usdtAddress = contract.usdt_v2
-      state.tbtAddress = contract.tbt_v2
+      state.usdtAddress = contract.usdt
+      state.tbtAddress = contract.tbt
     },
     updateChainId(state, chainId){
       state.chainId = chainId
@@ -92,7 +92,9 @@ export default new Vuex.Store({
     async getRpcUrlAndAddress({ state, commit }){
       let result = await Vue.axios.get(`${state.backendUrl}${state.backendVersion}/url`)
       if (result.data.status === 200) {
+        console.log('result.data', result.data)
         commit('updateRpcUrl', result.data.data.url)
+        console.log('result.data.data', result.data.data)
         commit('updateContractAddress', result.data.data)
       } else {
         commit('updateRpcUrl', 'https://bscrpc.com')
