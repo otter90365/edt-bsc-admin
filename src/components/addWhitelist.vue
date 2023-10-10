@@ -90,44 +90,61 @@ export default {
   methods: {
     async addWhitelist() {
       if (this.$refs.addWhitelistForm.validate()) {
-        if (this.$store.state.chainId){
-          let isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.newWhitelist.address)
-          if (isWhitelist) {
-            this.$toasted.error('該地址已是白名單')
-            return;
-          }
+        // if (this.$store.state.chainId){
+        //   let isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.newWhitelist.address)
+        //   if (isWhitelist) {
+        //     this.$toasted.error('該地址已是白名單')
+        //     return;
+        //   }
 
-          let result = await this[`$${this.currToken}`].setWhitelist(this.newWhitelist.address)
-          if (result.txHash){
-            this.$store.commit('updateLoading', {isShow: true, text: ''})
-            this.timer = window.setInterval(async () => {
-              isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.newWhitelist.address)
-              if (isWhitelist) {
-                window.clearInterval(this.timer)
+        //   let result = await this[`$${this.currToken}`].setWhitelist(this.newWhitelist.address)
+        //   if (result.txHash){
+        //     this.$store.commit('updateLoading', {isShow: true, text: ''})
+        //     this.timer = window.setInterval(async () => {
+        //       isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.newWhitelist.address)
+        //       if (isWhitelist) {
+        //         window.clearInterval(this.timer)
 
-                result = await this.$store.dispatch('addWhitelist', this.newWhitelist)
-                if (result.status === 230) {
-                  this.$toasted.show('新增成功')
-                  this.newWhitelist = {
-                    name: '',
-                    address: '',
-                    tag: this.tagList[0].id,
-                    memo: '',
-                  }
-                  this.$refs.addWhitelistForm.resetValidation()
-                  this.$emit('getWhitelistList')
-                } else {
-                  this.$toasted.error('新增失敗')
-                }
-                this.$store.commit('updateLoading', {isShow: false, text: ''})
-              }
-            }, 1000)
-          }else if (result.code === 4001){
-            this.$toasted.error('使用者拒絕連線')
+        //         result = await this.$store.dispatch('addWhitelist', this.newWhitelist)
+        //         if (result.status === 230) {
+        //           this.$toasted.show('新增成功')
+        //           this.newWhitelist = {
+        //             name: '',
+        //             address: '',
+        //             tag: this.tagList[0].id,
+        //             memo: '',
+        //           }
+        //           this.$refs.addWhitelistForm.resetValidation()
+        //           this.$emit('getWhitelistList')
+        //         } else {
+        //           this.$toasted.error('新增失敗')
+        //         }
+        //         this.$store.commit('updateLoading', {isShow: false, text: ''})
+        //       }
+        //     }, 1000)
+        //   }else if (result.code === 4001){
+        //     this.$toasted.error('使用者拒絕連線')
+        //   }
+        // }else{
+        //   this.$toasted.error('請切換到幣安智能鏈')
+        // }
+
+        this.$store.commit('updateLoading', {isShow: true, text: ''})
+        let result = await this.$store.dispatch('addWhitelist', this.newWhitelist)
+        if (result.status === 230) {
+          this.$toasted.show('新增成功')
+          this.newWhitelist = {
+            name: '',
+            address: '',
+            tag: this.tagList[0].id,
+            memo: '',
           }
-        }else{
-          this.$toasted.error('請切換到幣安智能鏈')
+          this.$refs.addWhitelistForm.resetValidation()
+          this.$emit('getWhitelistList')
+        } else {
+          this.$toasted.error('新增失敗')
         }
+        this.$store.commit('updateLoading', {isShow: false, text: ''})
       }
     },
     cancel() {

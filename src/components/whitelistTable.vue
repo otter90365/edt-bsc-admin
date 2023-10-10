@@ -301,39 +301,50 @@ export default {
       }
     },
     async deleteWhitelist() {
-      if (this.$store.state.chainId){
-        let isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.currItem.address)
-        if (!isWhitelist) {
-          this.$toasted.error('該地址非白名單')
-          return;
-        }
+      // if (this.$store.state.chainId){
+      //   let isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.currItem.address)
+      //   if (!isWhitelist) {
+      //     this.$toasted.error('該地址非白名單')
+      //     return;
+      //   }
 
-        let result = await this[`$${this.currToken}`].setWhitelist(this.currItem.address)
-        if (result.txHash){
-          this.$store.commit('updateLoading', {isShow: true, text: ''})
-          this.timer = window.setInterval(async () => {
-            isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.currItem.address)
-            if (!isWhitelist) {
-              window.clearInterval(this.timer)
+      //   let result = await this[`$${this.currToken}`].setWhitelist(this.currItem.address)
+      //   if (result.txHash){
+      //     this.$store.commit('updateLoading', {isShow: true, text: ''})
+      //     this.timer = window.setInterval(async () => {
+      //       isWhitelist = await this[`$${this.currToken}`].getIsWhitelist(this.currItem.address)
+      //       if (!isWhitelist) {
+      //         window.clearInterval(this.timer)
 
-              result = await this.$store.dispatch('deleteWhitelist', {id: this.currItem.id})
-              if (result.status === 230) {
-                this.$toasted.show('刪除成功')
-                this.deleteWhitelistDialogShow = false
-                this.deleteWhitelistConfirmShow = false
-                this.$emit('getWhitelistList')
-              } else {
-                this.$toasted.error('刪除失敗')
-              }
-              this.$store.commit('updateLoading', {isShow: false, text: ''})
-            }
-          }, 1000)
-        }else if (result.code === 4001){
-          this.$toasted.error('使用者拒絕連線')
-        }
-      }else{
-        this.$toasted.error('請切換到幣安智能鏈')
+      //         result = await this.$store.dispatch('deleteWhitelist', {id: this.currItem.id})
+      //         if (result.status === 230) {
+      //           this.$toasted.show('刪除成功')
+      //           this.deleteWhitelistDialogShow = false
+      //           this.deleteWhitelistConfirmShow = false
+      //           this.$emit('getWhitelistList')
+      //         } else {
+      //           this.$toasted.error('刪除失敗')
+      //         }
+      //         this.$store.commit('updateLoading', {isShow: false, text: ''})
+      //       }
+      //     }, 1000)
+      //   }else if (result.code === 4001){
+      //     this.$toasted.error('使用者拒絕連線')
+      //   }
+      // }else{
+      //   this.$toasted.error('請切換到幣安智能鏈')
+      // }
+      this.$store.commit('updateLoading', {isShow: true, text: ''})
+      let result = await this.$store.dispatch('deleteWhitelist', {id: this.currItem.id})
+      if (result.status === 230) {
+        this.$toasted.show('刪除成功')
+        this.deleteWhitelistDialogShow = false
+        this.deleteWhitelistConfirmShow = false
+        this.$emit('getWhitelistList')
+      } else {
+        this.$toasted.error('刪除失敗')
       }
+      this.$store.commit('updateLoading', {isShow: false, text: ''})
     },
     moveMobileWhitelist(event, index) {
       const x = event.touches[0].clientX;
