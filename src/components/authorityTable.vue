@@ -257,39 +257,39 @@ export default {
       this.updateAuthDialogShow = true;
     },
     async deleteContractAuth() {
-      if (this.currItem.permission.includes(2)) {
-        if (this.$store.state.chainId){
-          await this.deleteWhitelistAdmin('usdt')
-          await this.deleteWhitelistAdmin('tbt')
-        }else{
-          this.$toasted.error('請切換到幣安智能鏈')
-        }
-      } else {
+      // if (this.currItem.permission.includes(2)) {
+      //   if (this.$store.state.chainId){
+      //     await this.deleteWhitelistAdmin('usdt')
+      //     await this.deleteWhitelistAdmin('tbt')
+      //   }else{
+      //     this.$toasted.error('請切換到幣安智能鏈')
+      //   }
+      // } else {
         this.deleteAdmin()
-      }
+      // }
     },
-    async deleteWhitelistAdmin(token) {
-      let isAdmin = await this[`$${token}`].getIsAdmin(this.currItem.address)
-      if (!isAdmin) {
-        this.$toasted.error(`該地址非${token}白名單管理者`)
-        return;
-      }
+    // async deleteWhitelistAdmin(token) {
+    //   let isAdmin = await this[`$${token}`].getIsAdmin(this.currItem.address)
+    //   if (!isAdmin) {
+    //     this.$toasted.error(`該地址非${token}白名單管理者`)
+    //     return;
+    //   }
 
-      let result = await this[`$${token}`].setAdmin(this.currItem.address)
-      if (result.txHash){
-        this.$store.commit('updateLoading', {isShow: true, text: ''})
-        this.timer = window.setInterval(async () => {
-          isAdmin = await this[`$${token}`].getIsAdmin(this.currItem.address)
-          if (!isAdmin) {
-            window.clearInterval(this.timer)
-            await this.deleteAdmin()
-            this.$store.commit('updateLoading', {isShow: false, text: ''})
-          }
-        }, 1000)
-      }else if (result.code === 4001){
-        this.$toasted.error('使用者拒絕連線')
-      }
-    },
+    //   let result = await this[`$${token}`].setAdmin(this.currItem.address)
+    //   if (result.txHash){
+    //     this.$store.commit('updateLoading', {isShow: true, text: ''})
+    //     this.timer = window.setInterval(async () => {
+    //       isAdmin = await this[`$${token}`].getIsAdmin(this.currItem.address)
+    //       if (!isAdmin) {
+    //         window.clearInterval(this.timer)
+    //         await this.deleteAdmin()
+    //         this.$store.commit('updateLoading', {isShow: false, text: ''})
+    //       }
+    //     }, 1000)
+    //   }else if (result.code === 4001){
+    //     this.$toasted.error('使用者拒絕連線')
+    //   }
+    // },
     // delete admin (only api)
     async deleteAdmin(){
       let result = await this.$store.dispatch('deleteAdmin', {
@@ -324,18 +324,18 @@ export default {
       this.lastTouch.index = index
     },
     async updateContractAuth(item, newAuthId) {
-      if (newAuthId === 2) {
-        // set contract admin
-        if (!item.permission.includes(newAuthId)) {
-          await this.addContractAdmin(item, newAuthId, 'usdt', false)
-          await this.addContractAdmin(item, newAuthId, 'tbt', true)
-        } else {
-          await this.deleteContractAdmin(item, newAuthId, 'usdt', false)
-          await this.deleteContractAdmin(item, newAuthId, 'tbt', true)
-        }
-      } else {
+      // if (newAuthId === 2) {
+      //   // set contract admin
+      //   if (!item.permission.includes(newAuthId)) {
+      //     await this.addContractAdmin(item, newAuthId, 'usdt', false)
+      //     await this.addContractAdmin(item, newAuthId, 'tbt', true)
+      //   } else {
+      //     await this.deleteContractAdmin(item, newAuthId, 'usdt', false)
+      //     await this.deleteContractAdmin(item, newAuthId, 'tbt', true)
+      //   }
+      // } else {
         this.updateAuth(item, newAuthId)
-      }
+      // }
     },
     // update auth (only api)
     async updateAuth(item, newAuthId){
@@ -353,62 +353,62 @@ export default {
         this.$toasted.error('更新權限失敗')
       }
     },
-    async addContractAdmin(item, newAuthId, token, isUpdate) {
-      if (this.$store.state.chainId){
-        let isAdmin = await this[`$${token}`].getIsAdmin(item.address)
-        if (isAdmin) {
-          this.$toasted.error(`該地址已是${token}白名單管理者`)
-          return;
-        }
+    // async addContractAdmin(item, newAuthId, token, isUpdate) {
+    //   if (this.$store.state.chainId){
+    //     let isAdmin = await this[`$${token}`].getIsAdmin(item.address)
+    //     if (isAdmin) {
+    //       this.$toasted.error(`該地址已是${token}白名單管理者`)
+    //       return;
+    //     }
 
-        let result = await this[`$${token}`].setAdmin(item.address)
-        if (result.txHash){
-          this.$store.commit('updateLoading', {isShow: true, text: ''})
-          this.timer = window.setInterval(async () => {
-            isAdmin = await this[`$${token}`].getIsAdmin(item.address)
-            if (isAdmin) {
-              window.clearInterval(this.timer)
-              if (isUpdate) {
-                await this.updateAuth(item, newAuthId)
-              }
-              this.$store.commit('updateLoading', {isShow: false, text: ''})
-            }
-          }, 1000)
-        }else if (result.code === 4001){
-          this.$toasted.error('使用者拒絕連線')
-        }
-      }else{
-        this.$toasted.error('請切換到幣安智能鏈')
-      }
-    },
-    async deleteContractAdmin(item, newAuthId, token, isUpdate) {
-      if (this.$store.state.chainId){
-        let isAdmin = await this[`$${token}`].getIsAdmin(item.address)
-        if (!isAdmin) {
-          this.$toasted.error(`該地址非${token}白名單管理者`)
-          return;
-        }
+    //     let result = await this[`$${token}`].setAdmin(item.address)
+    //     if (result.txHash){
+    //       this.$store.commit('updateLoading', {isShow: true, text: ''})
+    //       this.timer = window.setInterval(async () => {
+    //         isAdmin = await this[`$${token}`].getIsAdmin(item.address)
+    //         if (isAdmin) {
+    //           window.clearInterval(this.timer)
+    //           if (isUpdate) {
+    //             await this.updateAuth(item, newAuthId)
+    //           }
+    //           this.$store.commit('updateLoading', {isShow: false, text: ''})
+    //         }
+    //       }, 1000)
+    //     }else if (result.code === 4001){
+    //       this.$toasted.error('使用者拒絕連線')
+    //     }
+    //   }else{
+    //     this.$toasted.error('請切換到幣安智能鏈')
+    //   }
+    // },
+    // async deleteContractAdmin(item, newAuthId, token, isUpdate) {
+    //   if (this.$store.state.chainId){
+    //     let isAdmin = await this[`$${token}`].getIsAdmin(item.address)
+    //     if (!isAdmin) {
+    //       this.$toasted.error(`該地址非${token}白名單管理者`)
+    //       return;
+    //     }
 
-        let result = await this[`$${token}`].setAdmin(item.address)
-        if (result.txHash){
-          this.$store.commit('updateLoading', {isShow: true, text: ''})
-          this.timer = window.setInterval(async () => {
-            isAdmin = await this[`$${token}`].getIsAdmin(item.address)
-            if (!isAdmin) {
-              window.clearInterval(this.timer)
-              if (isUpdate) {
-                await this.updateAuth(item, newAuthId)
-              }
-              this.$store.commit('updateLoading', {isShow: false, text: ''})
-            }
-          }, 1000)
-        }else if (result.code === 4001){
-          this.$toasted.error('使用者拒絕連線')
-        }
-      }else{
-        this.$toasted.error('請切換到幣安智能鏈')
-      }
-    }
+    //     let result = await this[`$${token}`].setAdmin(item.address)
+    //     if (result.txHash){
+    //       this.$store.commit('updateLoading', {isShow: true, text: ''})
+    //       this.timer = window.setInterval(async () => {
+    //         isAdmin = await this[`$${token}`].getIsAdmin(item.address)
+    //         if (!isAdmin) {
+    //           window.clearInterval(this.timer)
+    //           if (isUpdate) {
+    //             await this.updateAuth(item, newAuthId)
+    //           }
+    //           this.$store.commit('updateLoading', {isShow: false, text: ''})
+    //         }
+    //       }, 1000)
+    //     }else if (result.code === 4001){
+    //       this.$toasted.error('使用者拒絕連線')
+    //     }
+    //   }else{
+    //     this.$toasted.error('請切換到幣安智能鏈')
+    //   }
+    // }
   },
   mounted() {
     
