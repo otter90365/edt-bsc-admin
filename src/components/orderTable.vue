@@ -62,7 +62,7 @@
                  : item.settle === 3 ? '貸款中' : '' }}</span>
         </template>
         <template v-slot:item.settle_day="{item}">
-          {{ timestampToTime(item.settle_day * 1000) }}
+          {{ timestampToTime(item.settle_day * 3600 * 1000) }}
         </template>
         <template v-slot:item.countdown="{item}">
           <div v-if="item.countdown">
@@ -102,7 +102,7 @@
             }}
           </v-col>
           <v-col cols="5" class="text-center" :class="{'warning--text': item.settle === 2 || item.settle === 1}">
-            {{ item.settle === 1 || item.settle === 3 ? timestampToTime(item.settle_day * 1000) : '-' }}
+            {{ item.settle === 1 || item.settle === 3 ? timestampToTime(item.settle_day * 3600 * 1000) : '-' }}
           </v-col>
           <v-col cols="3" class="text-center" :class="{'warning--text': item.settle === 2 || item.settle === 1}">
             <div v-if="(item.settle === 1 || item.settle === 3) && item.countdown">
@@ -168,7 +168,7 @@
              : currItem.settle === 3 ? '貸款中' : '' }}
           </div>
           <div :class="isWarningText">
-            {{ currItem.settle === 1 || currItem.settle === 3 ? timestampToTime(currItem.settle_day * 1000) : '-' }}
+            {{ currItem.settle === 1 || currItem.settle === 3 ? timestampToTime(currItem.settle_day * 3600 * 1000) : '-' }}
           </div>
           <div :class="isWarningText">
             <div v-if="(currItem.settle === 1 || currItem.settle === 3) && currItem.countdown">
@@ -356,7 +356,7 @@ export default {
       let now = Math.floor(Date.now())
       let sec, min, hour, day
       this.currOrder.forEach(item => {
-        let dueTime = item.settle_day * 1000
+        let dueTime = item.settle_day * 3600 * 1000
         let offsetTIme = Math.abs((dueTime - now) / 1000)
 
         sec = parseInt(offsetTIme % 60)
