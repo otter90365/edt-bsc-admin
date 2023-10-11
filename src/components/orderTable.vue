@@ -73,7 +73,7 @@
           {{ item.want }} {{ basicToken.toUpperCase() }}
         </template>
         <template v-slot:item.rate="{item}">
-          {{ item.rate * 100 }}%
+          {{ (item.rate * 100).toFixed(2) }}%
         </template>
         <template v-slot:item.amount="{item}">
           {{ item.amount }} {{ borrowToken.toUpperCase() }}
