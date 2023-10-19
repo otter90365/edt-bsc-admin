@@ -271,39 +271,46 @@ export default {
   },
   watch: {
     lenderInput(newVal) {
+      this.page = 1
       this.$emit('update:lenderText', newVal)
     },
     lenderText(newVal) {
       this.lenderInput = newVal
     },
     borrowerInput(newVal) {
+      this.page = 1
       this.$emit('update:borrowerText', newVal)
     },
     borrowerText(newVal) {
       this.borrowerInput = newVal
     },
     settleInput(newVal) {
+      this.page = 1
       this.$emit('update:settleText', newVal)
     },
     settleText(newVal) {
       this.settleInput = newVal
     },
     startTimeInput(newVal) {
+      this.page = 1
       this.$emit('update:startTimeText', newVal)
     },
     startTimeText(newVal) {
       this.startTimeInput = newVal
     },
     endTimeInput(newVal) {
+      this.page = 1
       this.$emit('update:endTimeText', newVal)
     },
     endTimeText(newVal) {
       this.endTimeInput = newVal
     },
     countdownStartTimeText(newVal) {
+      this.page = 1
       this.countdownStartTimeInput = newVal
     },
     countdownEndTimeText(newVal) {
+      this.page = 1
       this.countdownEndTimeInput = newVal
     },
     itemPerPage() {
