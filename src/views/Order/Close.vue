@@ -132,13 +132,7 @@ export default {
         settle: this.settleText,
       })
       if (result.status === 231 && result.data) {
-        this.orders = result.data.orders.map(item => {
-          return {
-            ...item,
-            lender_address: `${item.lender_address.slice(0, 4)}...${item.lender_address.slice(36)}`,
-            borrower_address: `${item.borrower_address.slice(0, 4)}...${item.borrower_address.slice(36)}  `,
-          }
-        })
+        this.orders = result.data.orders || []
         let index = result.data.borrower.findIndex(item => item === '')
         if (index !== -1) {
           result.data.borrower.splice(index, 1)

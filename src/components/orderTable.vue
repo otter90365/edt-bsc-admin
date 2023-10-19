@@ -81,6 +81,12 @@
         <template v-slot:item.mortgageRate="{item}">
           {{ getMortgageRate(item) }}%
         </template>
+        <template v-slot:item.lender_address="{item}">
+          {{ item.lender_address.slice(0, 4) }}...{{ item.lender_address.slice(36) }}
+        </template>
+        <template v-slot:item.borrower_address="{item}">
+          {{ item.borrower_address.slice(0, 4) }}...{{ item.borrower_address.slice(36) }}
+        </template>
       </v-data-table>
     </div>
 
