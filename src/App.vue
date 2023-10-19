@@ -40,7 +40,7 @@
           v-for="nav in navList"
           :key="nav.link"
           :style="{opacity: nav.link === $route.name ? 1 : 0.3}"
-          @click="$router.push({name: nav.link})"
+          @click="clickNav(nav)"
         >
           <v-list-item-icon>
             <img :src="`${require(`@/assets/img/${nav.img}.svg`)}`" :alt="nav.text">
@@ -148,6 +148,10 @@ export default {
         this.$forceUpdate()
       }
     },
+    clickNav(nav) {
+      this.$router.push({name: nav.link})
+      this.sidebarClose = true
+    }
   },
   async mounted(){
     // console.log('==========default==========')
