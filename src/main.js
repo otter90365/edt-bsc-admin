@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import Toasted from 'vue-toasted';
+import Toasted from 'vue-toasted'
+import clipboard2 from './plugins/vue-clipboard2'
 
 const cookies = require('vue-cookies')
 
@@ -13,6 +14,7 @@ const app = new Vue({
   router,
   store,
   vuetify,
+  clipboard2,
   render: h => h(App)
 }).$mount('#app')
 

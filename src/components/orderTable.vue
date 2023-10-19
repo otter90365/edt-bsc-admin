@@ -187,7 +187,7 @@
         <div class="py-5 borrower-block">
           <div>借方</div>
           <div class="rem-20 font-weight-bold" :class="isWarningText">{{ currItem.borrower }}</div>
-          <div class="rem-2 break-all" :class="isWarningText">{{ currItem.borrower_address }}</div>
+          <div class="rem-2 break-all can-click" :class="isWarningText" @click="copy(currItem.borrower_address)">{{ currItem.borrower_address }}</div>
           <div>借款金額  <span :class="isWarningText">{{ currItem.want }} {{ basicToken.toUpperCase() }}</span></div>
           <div>抵押數量  <span :class="isWarningText">{{ currItem.amount }} {{ borrowToken.toUpperCase() }}</span></div>
           <div>利率  <span :class="isWarningText">{{ (currItem.rate * 100).toFixed(2) }}%</span></div>
@@ -197,7 +197,7 @@
         <div class="py-5 lender-block">
           <div>貸方</div>
           <div class="rem-20 font-weight-bold">{{ currItem.lender || '-' }}</div>
-          <div class="rem-2 break-all">{{ currItem.lender_address !== '0x0000000000000000000000000000000000000000' ? currItem.lender_address : '-' }}</div>
+          <div class="rem-2 break-all can-click" @click="copy(currItem.lender_address)">{{ currItem.lender_address !== '0x0000000000000000000000000000000000000000' ? currItem.lender_address : '-' }}</div>
         </div>
 
         <v-btn class="rounded-lg" color="darkPrimary1" dark depressed width="125" @click="detailsShow = false">關閉</v-btn>
@@ -384,6 +384,15 @@ export default {
       this.countdownStartTimeInput = data.startTime
       this.countdownEndTimeInput = data.endTime
       this.$emit('updateCountdown', data)
+    },
+    copy(text){
+      try {
+        const container = document.getElementsByClassName('detailed-info-card')[0]
+        this.$copyText(text, container)
+        this.$toasted.show('已複製至剪貼簿')
+      } catch (error) {
+        this.$toasted.error('複製失敗')
+      }
     }
   },
   mounted() {
