@@ -92,13 +92,13 @@
                   width="50%"
                   tile
                   depressed
-                  :color="currLender === item ? 'darkPrimary1' : 'transparent'"
-                  :dark="currLender === item"
-                  v-for="item in lenderItems.filter(item => item === null || item.includes(searchLender))"
+                  :color="currLender === (typeof item === 'string' ? item : item.value) ? 'darkPrimary1' : 'transparent'"
+                  :dark="currLender === (typeof item === 'string' ? item : item.value)"
+                  v-for="item in lenderItems.filter(item => (typeof item === 'object' && item.value === null) || item.includes(searchLender))"
                   :key="item"
-                  @click="currLender = item"
+                  @click="currLender = (typeof item === 'string' ? item : item.value)"
                 >
-                  {{ item || '全部' }}
+                  {{ (typeof item === 'string' ? item : item.value) || '全部' }}
                 </v-btn>
               </v-list>
             </v-card-text>
@@ -119,13 +119,13 @@
                   width="50%"
                   tile
                   depressed
-                  :color="currBorrower === item ? 'darkPrimary1' : 'transparent'"
-                  :dark="currBorrower === item"
-                  v-for="item in borrowerItems.filter(item => item === null || item.includes(searchBorrower))"
+                  :color="currBorrower === (typeof item === 'string' ? item : item.value) ? 'darkPrimary1' : 'transparent'"
+                  :dark="currBorrower === (typeof item === 'string' ? item : item.value)"
+                  v-for="item in borrowerItems.filter(item => (typeof item === 'object' && item.value === null) || item.includes(searchBorrower))"
                   :key="item"
-                  @click="currBorrower = item"
+                  @click="currBorrower = (typeof item === 'string' ? item : item.value)"
                 >
-                  {{ item || '全部' }}
+                  {{ (typeof item === 'string' ? item : item.value) || '全部' }}
                 </v-btn>
               </v-list>
             </v-card-text>

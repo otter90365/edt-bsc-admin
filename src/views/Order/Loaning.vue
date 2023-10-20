@@ -167,9 +167,9 @@ export default {
         if (index !== -1) {
           result.data.lender.splice(index, 1)
         }
-        this.borrowerItems = [null, ...result.data.borrower]
-        this.lenderItems = [null, ...result.data.lender]
-        this.settleItems = [null, {name: '緩衝期', value: 1}, {name: '貸款中', value: 3}]
+        this.borrowerItems = [{name: '全部', value: null}, ...result.data.borrower]
+        this.lenderItems = [{name: '全部', value: null}, ...result.data.lender]
+        this.settleItems = [{name: '全部', value: null}, {name: '緩衝期', value: 1}, {name: '貸款中', value: 3}]
 
         // sort order
         const now = Math.ceil(Date.now() / 1000)

@@ -141,9 +141,9 @@ export default {
         if (index !== -1) {
           result.data.lender.splice(index, 1)
         }
-        this.borrowerItems = [null, ...result.data.borrower]
-        this.lenderItems = [null, ...result.data.lender]
-        this.settleItems = [null, {name: '違約', value: 2}, {name: '已還款', value: 5}]
+        this.borrowerItems = [{name: '全部', value: null}, ...result.data.borrower]
+        this.lenderItems = [{name: '全部', value: null}, ...result.data.lender]
+        this.settleItems = [{name: '全部', value: null}, {name: '違約', value: 2}, {name: '已還款', value: 5}]
         this.filterOrders = this.orders.filter(item => item.borrower.includes(this.search) || item.lender.includes(this.search))
       }
     }

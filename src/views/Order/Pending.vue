@@ -115,7 +115,7 @@ export default {
         if (index !== -1) {
           result.data.borrower.splice(index, 1)
         }
-        this.borrowerItems = [null, ...result.data.borrower]
+        this.borrowerItems = [{name: '全部', value: null}, ...result.data.borrower]
         this.filterOrders = this.orders.filter(item => item.borrower.includes(this.search))
       }
     }
