@@ -7,7 +7,7 @@
         :items-per-page="itemPerPage"
         hide-default-footer
         @click:row="clickRow"
-        :item-class="(item) => item.settle === 2 || item.settle === 1 ? 'warning--text' : ''"
+        :item-class="(item) => item.settle === 2 || item.settle === 1 || (item.countdown && item.countdown.day * 24 + item.countdown.hour < 12) ? 'warning--text' : ''"
       >
         <!-- header -->
         <template v-slot:header.settle="{}">
@@ -53,7 +53,7 @@
 
         <!-- item -->
         <template v-slot:item.id="{item}">
-          <span :class="item.settle === 2 || item.settle === 1 ? 'warning--text' : 'lightPrimary--text'">#{{ item.id }}</span>
+          <span :class="item.settle === 2 || item.settle === 1 || (item.countdown && item.countdown.day * 24 + item.countdown.hour < 12) ? 'warning--text' : 'lightPrimary--text'">#{{ item.id }}</span>
         </template>
         <template v-slot:item.settle="{item}">
           <span>{{ item.settle === 2 ? '違約'
@@ -347,7 +347,10 @@ export default {
       return this.orders.slice(this.itemPerPage * (this.page - 1), this.itemPerPage * this.page)
     },
     isWarningText() {
-      return this.currItem && (this.currItem.settle === 2 || this.currItem.settle === 1) ? 'warning--text' : ''
+      return this.currItem && (this.currItem.settle === 2 || this.currItem.settle === 1 || this.lessThan12) ? 'warning--text' : ''
+    },
+    lessThan12() {
+      return this.currItem.countdown && this.currItem.countdown.day * 24 + this.currItem.countdown.hour < 12
     }
   },
   methods: {
